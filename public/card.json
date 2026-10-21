@@ -1,0 +1,32 @@
+{
+  "slug": "birthday-demo",
+  "path": "/demo/birthday",
+  "aliases": [],
+  "siteUrl": "",
+  "recipient": "Alex",
+  "sender": "A friend",
+  "seal": "A",
+  "shareTitle": "Happy birthday Alex!",
+  "previewImage": null,
+  "front": "Happy birthday!",
+  "message": "Happy birthday, Alex!\n\nWrite your own note here. Your photos are on the next page.",
+  "photoLinkLabel": "See the photos",
+  "photos": [
+    {
+      "id": 0,
+      "src": "/photos/portrait.svg",
+      "width": 600,
+      "height": 800,
+      "alt": "Portrait placeholder",
+      "caption": "Your caption here"
+    },
+    {
+      "id": 1,
+      "src": "/photos/landscape.svg",
+      "width": 1000,
+      "height": 650,
+      "alt": "Landscape placeholder",
+      "caption": "Another caption"
+    }
+  ]
+}

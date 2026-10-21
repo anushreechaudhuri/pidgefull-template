@@ -1,0 +1,5 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+const card=JSON.parse(await readFile('public/card.json','utf8'));if(!card.siteUrl)throw Error('Set siteUrl in public/card.json first.');
+const response=await fetch(new URL('/api/card',card.siteUrl),{cache:'no-store'});if(!response.ok)throw Error(`Published card unavailable (${response.status})`);const published=await response.json();
+for(const photo of card.photos){if(typeof published.captions?.[photo.id]!=='string')throw Error(`Missing caption ${photo.id}`);photo.caption=published.captions[photo.id];}
+for(const key of ['front','recipient','message'])card[key]=published[key];const folder=`cards/${card.slug}`;await mkdir(folder,{recursive:true});await writeFile(`${folder}/published.json`,JSON.stringify(published,null,2)+'\n');await writeFile(`${folder}/card.json`,JSON.stringify(card,null,2)+'\n');await writeFile('public/card.json',JSON.stringify(card,null,2)+'\n');console.log(`Backed up published text to ${folder}. Photos are in public/photos. Commit and push to save it on GitHub.`);
