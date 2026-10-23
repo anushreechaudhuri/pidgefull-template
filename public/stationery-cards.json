@@ -1,0 +1,19 @@
+[
+  {
+    "slug": "jam-demo",
+    "path": "/demo/jam-birthday",
+    "template": "jam",
+    "layout": "message-photo",
+    "recipient": "Alex",
+    "sender": "A friend",
+    "occasionDate": "",
+    "siteUrl": "",
+    "title": "Happy birthday Alex!",
+    "front": "Hope your birthday is\njam-packed with love",
+    "message": "Write your own birthday message here.",
+    "photo": "/photos/landscape.svg",
+    "photoAlt": "Landscape placeholder",
+    "art": "/templates/jam/art.webp",
+    "previewImage": null
+  }
+]

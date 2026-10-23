@@ -1,0 +1,9 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const args=Object.fromEntries(process.argv.slice(2).reduce((pairs,arg,i,list)=>{if(arg.startsWith('--'))pairs.push([arg.slice(2),list[i+1]]);return pairs;},[]));
+if(!args.recipient||!/^\d{4}-\d{2}-\d{2}$/.test(args.date||''))throw Error('Usage: npm run card:new -- --recipient Name --date YYYY-MM-DD [--slug custom-slug] [--sender Name] [--owner demo]');
+const [year,month,day]=args.date.split('-');const months=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];if(!months[Number(month)-1]||Number(day)<1||Number(day)>31)throw Error('Use a valid date.');
+const clean=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const slug=clean(args.slug||args.recipient+'-'+months[Number(month)-1]+Number(day)+'-'+year);const owner=clean(args.owner||'demo');
+const cards=JSON.parse(await readFile('public/stationery-cards.json','utf8'));if(cards.some(item=>item.slug===slug))throw Error('A card with that slug already exists.');
+const card={slug,path:'/'+owner+'/'+slug,template:'jam',layout:'message-photo',recipient:args.recipient,sender:args.sender||'A friend',occasionDate:args.date,siteUrl:args.site||process.env.SITE_URL||'',title:'Happy birthday '+args.recipient+'!',front:'Hope your birthday is\njam-packed with love',message:'',photo:'',photoAlt:'',art:'/templates/jam/art.webp',previewImage:null};cards.push(card);await writeFile('public/stationery-cards.json',JSON.stringify(cards,null,2)+'\n');
+const config=JSON.parse(await readFile('vercel.json','utf8'));config.rewrites.unshift({source:card.path,destination:'/stationery-'+slug+'.html'},{source:'/studio'+card.path,destination:'/stationery.html'});await writeFile('vercel.json',JSON.stringify(config,null,2)+'\n');console.log('Created '+card.path+'\nEditor: /studio'+card.path+'\nDeploy these changes, then open the owner edit link for this card.');

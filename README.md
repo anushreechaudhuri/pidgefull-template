@@ -54,3 +54,21 @@ This template serves one active card per deployment. Create another copy/project
 The original implementation was checked at 375×667 and 320×568 using Safari’s rendering engine, including reduced motion, touch/keyboard navigation and repeated opening. Test your own photos and note length on the devices you expect recipients to use.
 
 Code, icons, sample assets and illustration: MIT. Fonts: SIL Open Font License, as supplied in `public/fonts/`. Dependencies retain their respective licenses. Your photographs and messages remain yours.
+
+## Message + one-photo card (jam cover)
+
+Open `/demo/jam-birthday` for the second included layout. Its editor is `/studio/demo/jam-birthday`. A pink envelope opens to a watercolor toast-and-jam cover, then a single inside photo and your note. There is no gallery. The two original layouts coexist.
+
+Create additional independently addressable cards with:
+
+```sh
+npm run card:new -- --recipient Name --date 2026-11-12 --sender "Your name" --owner your-name --site https://your-site.example
+```
+
+This updates `public/stationery-cards.json` and the Vercel rewrites. Deploy, then open the new editor. The same jam artwork is reusable; change the record’s `art` and cover text for a different cover. Set `photo` to a local asset, or choose/paste one in the editor. All people and photo edges are preserved. Notes have a 6,000-character limit.
+
+This layout uses the same private Blob store and publisher secret as the gallery template. Its private editor keys are scoped to an individual card: HMAC-SHA256 of `stationery:<slug>` with `CARD_PUBLISH_KEY`. To generate the edit URL, load the production environment into ignored `.env.local`, then run `npm run card:edit-link -- <slug>`. Share only the recipient URL. **Update share link** publishes text/photo; **Copy share link** copies the clean URL. A draft must be published before it can be shared.
+
+Run `npm run backup:stationery -- <slug>` to archive a published card and sync its fallback text/photo assets, then commit/push. Unlike the original gallery’s one-active-card arrangement, this registry supports multiple message-and-photo cards on one deployment.
+
+The jam illustration was produced with the built-in image-generation tool and is reusable under the repository’s MIT license. Its exact prompt and provenance accompany `public/templates/jam/art.webp`. The public demo contains only placeholder content.

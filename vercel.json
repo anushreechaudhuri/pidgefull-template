@@ -4,6 +4,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/demo/jam-birthday",
+      "destination": "/stationery-jam-demo.html"
+    },
+    {
+      "source": "/studio/demo/jam-birthday",
+      "destination": "/stationery.html"
+    },
+    {
       "source": "/demo/birthday",
       "destination": "/card-page.html"
     },
@@ -48,6 +56,9 @@
   "functions": {
     "api/card.js": {
       "includeFiles": "public/card.json"
+    },
+    "api/stationery.js": {
+      "includeFiles": "public/stationery-cards.json"
     }
   }
 }

@@ -6,7 +6,10 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "node server.mjs",
-    "backup:card": "node scripts/backup-card.mjs"
+    "backup:card": "node scripts/backup-card.mjs",
+    "card:new": "node scripts/new-stationery-card.mjs",
+    "card:edit-link": "node --env-file-if-exists=.env.local scripts/edit-stationery-link.mjs",
+    "backup:stationery": "node scripts/backup-stationery.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2"
